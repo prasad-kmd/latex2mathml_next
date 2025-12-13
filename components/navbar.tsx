@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* Right Actions */}
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild className="hover:bg-accent">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+            <a href="https://github.com/prasad-kmd/latex2mathml_next" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
               <Github className="w-5 h-5" />
             </a>
           </Button>
