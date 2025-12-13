@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast"
 
 //   return { toast }
 // }
+import { toast } from "sonner"
 
 interface MathMLModalProps {
   isOpen: boolean
@@ -30,21 +31,23 @@ interface MathMLModalProps {
 }
 
 export default function MathMLModal({ isOpen, onClose, mathml }: MathMLModalProps) {
-  const { toast } = useToast()
+  // const { toast } = useToast()
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(mathml)
-      toast({
-        title: "Copied!",
+      // toast({
+      //   title: "Copied!",
+      toast.success("Copied!", {
         description: "MathML code copied to clipboard",
         duration: 2000,
       })
     } catch {
-      toast({
-        title: "Error",
+      // toast({
+      //   title: "Error",
+      toast.error("Error", {
         description: "Failed to copy to clipboard",
-        variant: "destructive",
+        // variant: "destructive",
         duration: 2000,
       })
     }
