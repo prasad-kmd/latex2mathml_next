@@ -25,15 +25,32 @@ export default function Home() {
     [latex],
   )
 
-  const convertLatexToMathML = (latexCode: string) => {
+  const convertLatexToMathML = async (latexCode: string) => {
     try {
       if (typeof window !== "undefined" && window.MathJax) {
-        setMathml(generateSimpleMathML(latexCode))
+        const mathJaxAny = window.MathJax as any
+        // Prefer async API if available, otherwise fall back to sync tex2mml
+        const mml =
+          (typeof mathJaxAny.tex2mmlPromise === "function" && await mathJaxAny.tex2mmlPromise(latexCode)) ||
+          (typeof mathJaxAny.tex2mml === "function" && mathJaxAny.tex2mml(latexCode)) ||
+          ""
+        setMathml(mml)
       }
     } catch (error) {
       setMathml("")
     }
   }
+
+  // const convertLatexToMathML = async (latexCode: string) => {
+  //   try {
+  //     if (typeof window !== "undefined" && window.MathJax) {
+  //       const mml = await window.MathJax.tex2mmlPromise(latexCode)
+  //       setMathml(mml)
+  //     }
+  //   } catch (error) {
+  //     setMathml("")
+  //   }
+  // }
 
   return (
     <main className="min-h-[calc(100vh-60px)] bg-background">
@@ -45,7 +62,11 @@ export default function Home() {
         <EquationEditor latex={latex} mathml={mathml} onLatexChange={handleLatexChange} />
 
         {/* Action Buttons */}
-        <ActionButtons mathml={mathml} onViewMathML={() => setIsModalOpen(true)} />
+        <ActionButtons
+          mathml={mathml}
+          latex={latex}
+          onViewMathML={() => setIsModalOpen(true)}
+        />
 
         {/* MathML Modal */}
         <MathMLModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} mathml={mathml} />
@@ -54,34 +75,3 @@ export default function Home() {
   )
 }
 
-// Simple MathML generator from LaTeX
-function generateSimpleMathML(latex: string): string {
-  if (!latex.trim()) return ""
-
-  // Convert common LaTeX patterns to MathML
-  let mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>`
-
-  // Replace common LaTeX commands
-  const converted = latex
-    .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, "<mfrac><mrow>$1</mrow><mrow>$2</mrow></mfrac>")
-    .replace(/\\sqrt\{([^}]*)\}/g, "<msqrt><mrow>$1</mrow></msqrt>")
-    .replace(/\^/g, "<msup>")
-    .replace(/_/g, "<msub>")
-    .replace(/\\alpha/g, "α")
-    .replace(/\\beta/g, "β")
-    .replace(/\\gamma/g, "γ")
-    .replace(/\\delta/g, "δ")
-    .replace(/\\pi/g, "π")
-    .replace(/\\theta/g, "θ")
-    .replace(/\\sum/g, "∑")
-    .replace(/\\int/g, "∫")
-    .replace(/\\pm/g, "±")
-    .replace(/\\times/g, "×")
-    .replace(/\\div/g, "÷")
-    .replace(/\\leq/g, "≤")
-    .replace(/\\geq/g, "≥")
-    .replace(/\\neq/g, "≠")
-
-  mathml += converted + "</mrow></math>"
-  return mathml
-}

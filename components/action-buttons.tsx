@@ -1,29 +1,29 @@
 "use client"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Copy, Eye } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
 
 interface ActionButtonsProps {
   mathml: string
+  latex: string
   onViewMathML: () => void
 }
 
-export default function ActionButtons({ mathml, onViewMathML }: ActionButtonsProps) {
-  const { toast } = useToast()
-
+export default function ActionButtons({
+  mathml,
+  latex,
+  onViewMathML,
+}: ActionButtonsProps) {
   const handleCopyMathML = async () => {
     try {
       await navigator.clipboard.writeText(mathml)
-      toast({
-        title: "Copied!",
+      toast.success("Copied!", {
         description: "MathML code copied to clipboard",
         duration: 2000,
       })
     } catch {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: "Failed to copy to clipboard",
-        variant: "destructive",
         duration: 2000,
       })
     }
@@ -31,22 +31,14 @@ export default function ActionButtons({ mathml, onViewMathML }: ActionButtonsPro
 
   const handleCopyLatex = async () => {
     try {
-      // Extract LaTeX from MathML display (stored in mathml for reference)
-      const latexMatch = mathml.match(/LaTeX: ([^<]+)/)
-      const latex = latexMatch ? latexMatch[1] : ""
-      if (latex) {
-        await navigator.clipboard.writeText(latex)
-        toast({
-          title: "Copied!",
-          description: "LaTeX code copied to clipboard",
-          duration: 2000,
-        })
-      }
+      await navigator.clipboard.writeText(latex)
+      toast.success("Copied!", {
+        description: "LaTeX code copied to clipboard",
+        duration: 2000,
+      })
     } catch {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: "Failed to copy to clipboard",
-        variant: "destructive",
         duration: 2000,
       })
     }
@@ -56,7 +48,7 @@ export default function ActionButtons({ mathml, onViewMathML }: ActionButtonsPro
     <div className="flex flex-col sm:flex-row gap-2 justify-end">
       <Button
         onClick={handleCopyLatex}
-        disabled={!mathml}
+        disabled={!latex}
         variant="outline"
         size="sm"
         className="gap-2 bg-transparent text-xs"
