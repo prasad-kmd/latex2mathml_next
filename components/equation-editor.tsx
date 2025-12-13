@@ -67,7 +67,7 @@ export default function EquationEditor({ latex, mathml, onLatexChange }: Equatio
         <div className="space-y-2">
           <Label className="text-xs font-medium">Live Preview</Label>
           <div className="h-32 border border-border rounded-md bg-card p-4 flex items-center justify-center overflow-auto">
-            <EquationPreview latex={latex} />
+            <EquationPreview mathml={mathml} />
           </div>
         </div>
       </div>

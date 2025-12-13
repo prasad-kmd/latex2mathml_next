@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
+import temml from "temml"
 import PredefinedEquations from "@/components/predefined-equations"
 import EquationEditor from "@/components/equation-editor"
 import ActionButtons from "@/components/action-buttons"
@@ -25,32 +26,19 @@ export default function Home() {
     [latex],
   )
 
-  const convertLatexToMathML = async (latexCode: string) => {
-    try {
-      if (typeof window !== "undefined" && window.MathJax) {
-        const mathJaxAny = window.MathJax as any
-        // Prefer async API if available, otherwise fall back to sync tex2mml
-        const mml =
-          (typeof mathJaxAny.tex2mmlPromise === "function" && await mathJaxAny.tex2mmlPromise(latexCode)) ||
-          (typeof mathJaxAny.tex2mml === "function" && mathJaxAny.tex2mml(latexCode)) ||
-          ""
-        setMathml(mml)
-      }
-    } catch (error) {
+  const convertLatexToMathML = (latexCode: string) => {
+    if (!latexCode.trim()) {
       setMathml("")
+      return
+    }
+    try {
+      const mml = temml.renderToString(latexCode, { displayMode: true, xml: true })
+      setMathml(mml)
+    } catch (error) {
+      console.error("Temml rendering error:", error)
+      setMathml("error")
     }
   }
-
-  // const convertLatexToMathML = async (latexCode: string) => {
-  //   try {
-  //     if (typeof window !== "undefined" && window.MathJax) {
-  //       const mml = await window.MathJax.tex2mmlPromise(latexCode)
-  //       setMathml(mml)
-  //     }
-  //   } catch (error) {
-  //     setMathml("")
-  //   }
-  // }
 
   return (
     <main className="min-h-[calc(100vh-60px)] bg-background">
