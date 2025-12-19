@@ -1,10 +1,12 @@
 "use client"
 
+import { useRef } from "react"
 import type React from "react"
 
 import { EquationPreview } from "./equation-preview"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import InputControls from "./InputControls"
 
 interface EquationEditorProps {
   latex: string
@@ -13,6 +15,33 @@ interface EquationEditorProps {
 }
 
 export default function EquationEditor({ latex, mathml, onLatexChange }: EquationEditorProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleClear = () => {
+    onLatexChange("")
+    textareaRef.current?.focus()
+  }
+
+  const handleMoveLeft = () => {
+    if (textareaRef.current) {
+      const { selectionStart } = textareaRef.current
+      const newPosition = Math.max(0, selectionStart - 1)
+      textareaRef.current.selectionStart = newPosition
+      textareaRef.current.selectionEnd = newPosition
+      textareaRef.current.focus()
+    }
+  }
+
+  const handleMoveRight = () => {
+    if (textareaRef.current) {
+      const { selectionStart } = textareaRef.current
+      const newPosition = Math.min(latex.length, selectionStart + 1)
+      textareaRef.current.selectionStart = newPosition
+      textareaRef.current.selectionEnd = newPosition
+      textareaRef.current.focus()
+    }
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const target = e.currentTarget
     const { selectionStart, selectionEnd, value } = target
@@ -55,12 +84,14 @@ export default function EquationEditor({ latex, mathml, onLatexChange }: Equatio
           </Label>
           <Textarea
             id="latex-input"
+            ref={textareaRef}
             placeholder="Enter LaTeX or select symbols above..."
             value={latex}
             onChange={(e) => onLatexChange(e.target.value)}
             onKeyDown={handleKeyDown}
             className="h-32 font-mono text-xs resize-none border border-input rounded-md"
           />
+          <InputControls onClear={handleClear} onMoveLeft={handleMoveLeft} onMoveRight={handleMoveRight} />
         </div>
 
         {/* Preview Section */}
