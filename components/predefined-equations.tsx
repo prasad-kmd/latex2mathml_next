@@ -1,6 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Equation from "./Equation"
+import MoreEquationsModal from "./MoreEquationsModal"
 
 interface PredefinedEquationsProps {
   onSelectEquation: (equation: string) => void
@@ -40,6 +42,38 @@ export default function PredefinedEquations({ onSelectEquation }: PredefinedEqua
       { label: "≥", value: "\\geq" },
       { label: "≠", value: "\\neq" },
     ],
+    relations: [
+      { label: "≈", value: "\\approx" },
+      { label: "≡", value: "\\equiv" },
+      { label: "∝", value: "\\propto" },
+      { label: "∼", value: "\\sim" },
+      { label: "cong", value: "\\cong" },
+      { label: "parallel", value: "\\parallel" },
+    ],
+    logic: [
+      { label: "∧", value: "\\land" },
+      { label: "∨", value: "\\lor" },
+      { label: "¬", value: "\\lnot" },
+      { label: "→", value: "\\to" },
+      { label: "∀", value: "\\forall" },
+      { label: "∃", value: "\\exists" },
+    ],
+    arrows: [
+      { label: "→", value: "\\to" },
+      { label: "←", value: "\\leftarrow" },
+      { label: "↔", value: "\\leftrightarrow" },
+      { label: "⇒", value: "\\Rightarrow" },
+      { label: "⇐", value: "\\Leftarrow" },
+      { label: "⇔", value: "\\Leftrightarrow" },
+    ],
+    trigonometry: [
+      { label: "sin", value: "\\sin" },
+      { label: "cos", value: "\\cos" },
+      { label: "tan", value: "\\tan" },
+      { label: "csc", value: "\\csc" },
+      { label: "sec", value: "\\sec" },
+      { label: "cot", value: "\\cot" },
+    ],
   }
 
   return (
@@ -62,23 +96,29 @@ export default function PredefinedEquations({ onSelectEquation }: PredefinedEqua
           </TabsTrigger>
         </TabsList>
 
-        {Object.entries(equations).map(([category, items]) => (
-          <TabsContent key={category} value={category} className="space-y-2 mt-2">
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-1">
-              {items.map((item) => (
-                <Button
-                  key={item.value}
-                  onClick={() => onSelectEquation(item.value)}
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </div>
-          </TabsContent>
-        ))}
+        {Object.entries(equations)
+          .slice(0, 4)
+          .map(([category, items]) => (
+            <TabsContent key={category} value={category} className="space-y-2 mt-2">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-1">
+                {items.map((item) => (
+                  <Button
+                    key={item.value}
+                    onClick={() => onSelectEquation(item.value)}
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+                  >
+                    <Equation latex={item.value} />
+                  </Button>
+                ))}
+              </div>
+            </TabsContent>
+          ))}
+        <MoreEquationsModal
+          equations={Object.fromEntries(Object.entries(equations).slice(4))}
+          onSelectEquation={onSelectEquation}
+        />
       </Tabs>
     </div>
   )
