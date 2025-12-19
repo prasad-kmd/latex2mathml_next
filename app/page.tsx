@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-60px)] bg-background">
+    <main className="min-h-[calc(100vh-113px)] bg-background">
       <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
         {/* Predefined Equations Section */}
         <PredefinedEquations onSelectEquation={handleEquationSelect} />
