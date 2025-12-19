@@ -52,8 +52,7 @@ export default function MoreEquationsModal({
                     key={item.value}
                     onClick={() => onSelectEquation(item.value)}
                     variant="outline"
-                    size="sm"
-                    className="h-8 text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+                    className="text-xl font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
                   >
                     <Equation latex={item.value} />
                   </Button>
