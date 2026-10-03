@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
+  "applicationId": "lk.prasadkmd.latex2mathml",
+  "applicationName": "LaTeX to MathML Converter",
+  "author": "Prasad M",
+  "copyright": "Copyright \u00a9 2026 Prasad M. All rights reserved.",
+  "version": "2.2.0",
+  "defaultMode": "window",
+  "port": 0,
+  "dataLocation": "system",
+  "storageLocation": "system",
+  "documentRoot": "/resources/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "nativeAllowList": [
+    "os.showOpenDialog",
+    "os.showSaveDialog",
+    "os.open",
+    "storage.getData",
+    "storage.setData",
+    "filesystem.readFile",
+    "filesystem.writeFile",
+    "clipboard.writeText"
+  ],
+  "modes": {
+    "window": {
+      "title": "LaTeX to MathML Converter",
+      "width": 1280,
+      "height": 800,
+      "minWidth": 380,
+      "minHeight": 620,
+      "center": true,
+      "resizable": true,
+      "icon": "/resources/favicon.png"
+    }
+  },
+  "cli": {
+    "binaryName": "latex-mathml",
+    "resourcesPath": "/resources/",
+    "binaryVersion": "6.9.0"
+  },
+  "description": "Offline LaTeX to MathML equation editor with a searchable symbol palette"
+}

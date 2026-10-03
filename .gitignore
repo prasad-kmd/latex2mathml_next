@@ -9,7 +9,6 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-package-lock.json
 
 # testing
 /coverage
@@ -40,6 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-dist/builder-debug.yml
-dist/builder-effective-config.yaml
-public/instructions/equations-to-include.md

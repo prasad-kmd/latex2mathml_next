@@ -1,62 +1,12 @@
-import type React from "react"
-import type { Metadata } from "next"
-
-// import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-import { Toaster } from "@/components/ui/sonner"
-import { ThemeProvider } from "@/components/theme-provider"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/Footer"
-
-import { Inter as V0_Font_Inter, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
-
-// Initialize fonts
-const _inter = V0_Font_Inter({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _geistMono = V0_Font_Geist_Mono({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] })
+import type { Metadata } from "next";
+import "./globals.css";
+import "./temml.css";
 
 export const metadata: Metadata = {
-  title: "LaTeX to MathML Converter",
-  description: "Convert LaTeX equations to MathML format with real-time preview",
-  generator: "PrasadM",
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/KaTeX_Math Italic - Greek Theta Symbol.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/favicon.png",
-  },
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="stylesheet" href="/Temml-Local.css" />
-      </head>
-      <body className={`font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          {children}
-          <Toaster />
-          <Footer />
-        </ThemeProvider>
-        {/* <Analytics /> */}
-      </body>
-    </html>
-  )
+  title: "LaTeX to MathML Converter — Studio",
+  description: "A private, offline-first LaTeX to MathML workspace. Convert with TeMMl or KaTeX, inspect, copy and export accessible math.",
+  icons: { icon: "/favicon.png", shortcut: "/favicon.ico" },
+};
+export default function RootLayout({ children }: Readonly<{children: React.ReactNode}>) {
+  return <html lang="en"><body>{children}</body></html>;
 }
