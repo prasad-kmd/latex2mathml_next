@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package the already-built embedded executables and source as 2.2.0 downloads."""
+"""Package the already-built embedded executables and source as 2.3.0 downloads."""
 from pathlib import Path
 import hashlib
 import json
@@ -27,7 +27,7 @@ def write_member(archive, data: bytes, name: str, executable=False):
 
 
 quickstart = {
-    "Linux-x64": """LaTeX to MathML Converter 2.2.0 — Linux x64
+    "Linux-x64": """LaTeX to MathML Converter 2.3.0 — Linux x64
 
 Run: ./latex-mathml-linux_x64
 If necessary: chmod +x latex-mathml-linux_x64
@@ -36,7 +36,7 @@ Only the executable is needed to run; resources.neu is embedded in it.
 Other files are optional notices and licenses. No Node.js installation required.
 Copyright © 2026 Prasad M. All rights reserved.
 """,
-    "Windows-x64": """LaTeX to MathML Converter 2.2.0 — Windows x64
+    "Windows-x64": """LaTeX to MathML Converter 2.3.0 — Windows x64
 
 Run: latex-mathml-win_x64.exe
 Requires Microsoft Edge WebView2 Runtime. The app works offline.

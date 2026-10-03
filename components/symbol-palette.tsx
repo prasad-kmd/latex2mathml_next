@@ -29,7 +29,7 @@ function SymbolPaletteInner({ onInsert, onRegisterSearch }: Props) {
       <TabsList variant="line" className="palette-tabs" aria-label="Symbol categories">{symbolGroups.map((current) => <TabsTrigger key={current.name} value={current.name} className="palette-tab">{current.name}</TabsTrigger>)}</TabsList>
     </Tabs>
     <div className="palette-results" role="group" aria-label={query ? `Search results for ${query}` : `${category} symbols`}>
-      {matches.map((item, index) => <button type="button" key={`${item.name}-${item.latex}-${index}`} className="symbol-tile" title={`${item.name} · ${item.latex.replaceAll("|", "□")}`} aria-label={`Insert ${item.name}`} onMouseDown={(event) => event.preventDefault()} onClick={() => onInsert(item)}><span className="symbol-glyph" aria-hidden="true">{item.glyph}</span><span className="symbol-name">{item.name}</span></button>)}
+      {matches.map((item, index) => <button type="button" key={`${item.name}-${item.latex}-${index}`} className="symbol-tile" title={`${item.name} · ${item.latex.replaceAll("|", "□").replaceAll("⟦", "").replaceAll("⟧", "")} · Tab to next field`} aria-label={`Insert ${item.name}`} onMouseDown={(event) => event.preventDefault()} onClick={() => onInsert(item)}><span className="symbol-glyph" aria-hidden="true">{item.glyph}</span><span className="symbol-name">{item.name}</span></button>)}
       {matches.length === 0 && <p className="no-symbols">No matches. Try a name such as “fraction” or a LaTeX command.</p>}
     </div>
   </section>;

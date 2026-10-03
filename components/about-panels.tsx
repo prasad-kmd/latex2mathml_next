@@ -31,7 +31,7 @@ const dependencies = [
 ];
 
 export function AboutPanel({ desktop, onNotices }: { desktop: boolean; onNotices: () => void }) {
-  return <><DialogHeader><DialogTitle>About this app</DialogTitle><DialogDescription>LaTeX to MathML Converter · version 2.2.0</DialogDescription></DialogHeader>
+  return <><DialogHeader><DialogTitle>About this app</DialogTitle><DialogDescription>LaTeX to MathML Converter · version 2.3.0</DialogDescription></DialogHeader>
     <div className="about-content"><p>A focused workspace for writing mathematical expressions. Type LaTeX or insert from 301 categorized symbols, see native MathML beside your source, then copy or export clean, validated markup. TeMMl and KaTeX run entirely on your device; no account or conversion server is required.</p>
       <p>Resize the symbol tray to suit your work. On a narrow desktop window, the editor stacks above the live preview so you can work alongside another app. Save named equations locally, and export a JSON backup to move your library between computers.</p>
       <p>Created by Prasad M. Copyright © 2026 Prasad M. All rights reserved.</p>

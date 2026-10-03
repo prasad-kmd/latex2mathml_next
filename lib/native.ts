@@ -13,6 +13,7 @@ const storageKeys: Record<string, string> = {
   "mathml-studio:v2": "mathml_studio_draft_v2",
   "mathml-studio:library:v1": "mathml_studio_library_v1",
   "mathml-studio:palette-height": "mathml_studio_palette_height",
+  "mathml-studio:input-share": "mathml_studio_input_share",
 };
 export async function readAppStore(key: string): Promise<string | null> {
   const api = await native();
