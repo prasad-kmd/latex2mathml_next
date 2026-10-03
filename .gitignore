@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+dist/builder-debug.yml
+dist/builder-effective-config.yaml
+public/instructions/equations-to-include.md

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { forwardRef } from "react"
 import type React from "react"
 
 import { EquationPreview } from "./equation-preview"
@@ -14,33 +14,34 @@ interface EquationEditorProps {
   onLatexChange: (value: string) => void
 }
 
-export default function EquationEditor({ latex, mathml, onLatexChange }: EquationEditorProps) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  const handleClear = () => {
-    onLatexChange("")
-    textareaRef.current?.focus()
-  }
-
-  const handleMoveLeft = () => {
-    if (textareaRef.current) {
-      const { selectionStart } = textareaRef.current
-      const newPosition = Math.max(0, selectionStart - 1)
-      textareaRef.current.selectionStart = newPosition
-      textareaRef.current.selectionEnd = newPosition
-      textareaRef.current.focus()
+const EquationEditor = forwardRef<HTMLTextAreaElement, EquationEditorProps>(
+  ({ latex, mathml, onLatexChange }, ref) => {
+    const handleClear = () => {
+      onLatexChange("")
+      if (ref && typeof ref !== "function") {
+        ref.current?.focus()
+      }
     }
-  }
 
-  const handleMoveRight = () => {
-    if (textareaRef.current) {
-      const { selectionStart } = textareaRef.current
-      const newPosition = Math.min(latex.length, selectionStart + 1)
-      textareaRef.current.selectionStart = newPosition
-      textareaRef.current.selectionEnd = newPosition
-      textareaRef.current.focus()
+    const handleMoveLeft = () => {
+      if (ref && typeof ref !== "function" && ref.current) {
+        const { selectionStart } = ref.current
+        const newPosition = Math.max(0, selectionStart - 1)
+        ref.current.selectionStart = newPosition
+        ref.current.selectionEnd = newPosition
+        ref.current.focus()
+      }
     }
-  }
+
+    const handleMoveRight = () => {
+      if (ref && typeof ref !== "function" && ref.current) {
+        const { selectionStart } = ref.current
+        const newPosition = Math.min(latex.length, selectionStart + 1)
+        ref.current.selectionStart = newPosition
+        ref.current.selectionEnd = newPosition
+        ref.current.focus()
+      }
+    }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const target = e.currentTarget
@@ -84,7 +85,7 @@ export default function EquationEditor({ latex, mathml, onLatexChange }: Equatio
           </Label>
           <Textarea
             id="latex-input"
-            ref={textareaRef}
+            ref={ref}
             placeholder="Enter LaTeX or select symbols above..."
             value={latex}
             onChange={(e) => onLatexChange(e.target.value)}
@@ -104,4 +105,9 @@ export default function EquationEditor({ latex, mathml, onLatexChange }: Equatio
       </div>
     </div>
   )
-}
+  }
+)
+
+EquationEditor.displayName = "EquationEditor"
+
+export default EquationEditor
